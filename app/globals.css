@@ -351,6 +351,7 @@ button:focus-visible, input:focus-visible, select:focus-visible, a:focus-visible
 .vehicle-spec-row small { color: #767d70; font: 7px var(--mono); letter-spacing: .07em; }
 .vehicle-spec-row a { margin-left: auto; color: #52672c; font: 9px var(--mono); text-decoration: underline; text-decoration-color: #aabd81; text-underline-offset: 3px; }
 .vehicle-spec-row a:hover { color: #22271d; }
+.vehicle-spec-row a + a { margin-left: -8px; }
 
 @media (max-width: 760px) {
   .vehicle-trigger { min-height: 60px; }

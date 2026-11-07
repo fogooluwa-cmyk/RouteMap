@@ -11,6 +11,7 @@ export type Vehicle = {
   initials: string;
   sourceUrl: string;
   sourceLabel: string;
+  efficiencySourceUrl?: string;
 };
 
 const ccs = ["ccs", "combined charging system", "type 2"];
@@ -27,6 +28,7 @@ function vehicle(
   sourceUrl: string,
   sourceLabel: string,
   connectorAliases = ccs,
+  efficiencySourceUrl?: string,
 ): Vehicle {
   return {
     name: `${make} ${model} ${variant}`,
@@ -41,6 +43,7 @@ function vehicle(
     initials: make === "Volkswagen" ? "VW" : make.slice(0, 2).toUpperCase(),
     sourceUrl,
     sourceLabel,
+    efficiencySourceUrl,
   };
 }
 
@@ -60,6 +63,12 @@ const audiQ6 = "https://www.audi-mediacenter.com/en/the-audi-q6-e-tron-electric-
 const fordExplorer = "https://www.ford.co.uk/content/dam/guxeu/uk/documents/price-list/cars/PL-Explorer_Customer_Price_List.pdf";
 const fordCapri = "https://www.ford.co.uk/content/dam/guxeu/uk/documents/price-list/cars/PL-Capri_Customer_Price_List.pdf";
 const nissanLeaf = "https://www.nissan.co.uk/vehicles/new-vehicles/leaf/prices-specifications.html";
+const teslaModel3 = "https://www.tesla.com/en_gb/model3";
+const teslaModelY = "https://www.tesla.com/en_gb/modely";
+const teslaModel3RwdBattery = "https://ev-database.org/uk/car/3403/Tesla-Model-3-RWD";
+const teslaModel3PremiumBattery = "https://ev-database.org/uk/car/3404/Tesla-Model-3-Premium-RWD";
+const teslaModelYRwdBattery = "https://ev-database.org/uk/car/3741/Tesla-Model-Y-RWD";
+const teslaModelYPremiumBattery = "https://ev-database.org/uk/car/3843/Tesla-Model-Y-Premium-AWD";
 
 // Battery figures are manufacturer-published usable/net capacity. Efficiency
 // is a WLTP combined estimate in mi/kWh; where the source publishes kWh/100 km,
@@ -105,4 +114,11 @@ export const vehicles: Vehicle[] = [
 
   vehicle("Nissan", "LEAF", "52 kWh Engage", "2026", 52, 4.6, "CCS2 · Type 2 AC", nissanLeaf, "Nissan UK specifications"),
   vehicle("Nissan", "LEAF", "75 kWh Advance", "2026", 75, 4.28, "CCS2 · Type 2 AC", nissanLeaf, "Nissan UK specifications"),
+
+  // Tesla does not publish usable pack capacity in its UK configurator. Capacity
+  // is attributed to EV Database; combined WLTP consumption comes from Tesla UK.
+  vehicle("Tesla", "Model 3", "RWD", "2026", 60, miPerKwh(13.8), "CCS2 · Type 2 AC", teslaModel3RwdBattery, "EV Database usable capacity", ccs, teslaModel3),
+  vehicle("Tesla", "Model 3", "Premium RWD", "2026", 79, miPerKwh(13.6), "CCS2 · Type 2 AC", teslaModel3PremiumBattery, "EV Database usable capacity", ccs, teslaModel3),
+  vehicle("Tesla", "Model Y", "RWD", "2026", 60, miPerKwh(13.8), "CCS2 · Type 2 AC", teslaModelYRwdBattery, "EV Database usable capacity", ccs, teslaModelY),
+  vehicle("Tesla", "Model Y", "Premium AWD", "2026", 79, miPerKwh(15.6), "CCS2 · Type 2 AC", teslaModelYPremiumBattery, "EV Database usable capacity", ccs, teslaModelY),
 ];

@@ -23,7 +23,7 @@ export default function VehicleSelector({ vehicles, selectedIndex, onChange }: P
     );
     const grouped = new Map<string, typeof filtered>();
     filtered.forEach((item) => grouped.set(item.vehicle.make, [...(grouped.get(item.vehicle.make) ?? []), item]));
-    return [...grouped.entries()];
+    return [...grouped.entries()].sort(([a], [b]) => a.localeCompare(b, "en-GB"));
   }, [vehicles, query]);
 
   useEffect(() => {
@@ -74,7 +74,10 @@ export default function VehicleSelector({ vehicles, selectedIndex, onChange }: P
       <div className="vehicle-spec-row">
         <span><strong>{selected.batteryKwh} kWh</strong><small>USABLE BATTERY</small></span>
         <span><strong>~{selected.efficiencyMiPerKwh.toFixed(1)} mi/kWh</strong><small>WLTP ESTIMATE</small></span>
-        <a href={selected.sourceUrl} target="_blank" rel="noreferrer" title={`View ${selected.sourceLabel}`}>Specs ↗</a>
+        {selected.efficiencySourceUrl ? <>
+          <a href={selected.sourceUrl} target="_blank" rel="noreferrer" title={`View ${selected.sourceLabel}`}>Battery ↗</a>
+          <a href={selected.efficiencySourceUrl} target="_blank" rel="noreferrer" title="View Tesla WLTP specifications">WLTP ↗</a>
+        </> : <a href={selected.sourceUrl} target="_blank" rel="noreferrer" title={`View ${selected.sourceLabel}`}>Specs ↗</a>}
       </div>
     </div>
   );
