@@ -3,6 +3,7 @@
 import { FormEvent, useMemo, useState } from "react";
 import LocationSearch from "@/components/LocationSearch";
 import RouteMap, { type Charger } from "@/components/RouteMap";
+import VehicleSelector from "@/components/VehicleSelector";
 import { vehicles } from "@/lib/vehicles";
 import type { DrivingRoute, PlaceResult } from "@/lib/mapbox";
 
@@ -211,13 +212,7 @@ export default function Home() {
             </div>
 
             <div className="field-label-row vehicle-label"><label htmlFor="vehicle">YOUR VEHICLE</label><span className="form-hint">{vehicle.connectorLabel}</span></div>
-            <div className="select-wrap">
-              <span className="vehicle-icon"><Icon name="car" size={17} /></span>
-              <select id="vehicle" value={vehicleIndex} onChange={(event) => { void updateVehicle(Number(event.target.value)); }}>
-                {vehicles.map((item, index) => <option key={item.name} value={index}>{item.name}</option>)}
-              </select>
-              <span className="select-chevron">⌄</span>
-            </div>
+            <VehicleSelector vehicles={vehicles} selectedIndex={vehicleIndex} onChange={(index) => { void updateVehicle(index); }} />
 
             <div className="battery-heading"><label htmlFor="battery">STARTING BATTERY</label><span className="battery-number">{battery}<small>%</small></span></div>
             <input className="battery-slider" id="battery" type="range" min="5" max="100" value={battery} style={{ "--range-progress": `${((battery - 5) / 95) * 100}%` } as React.CSSProperties} onChange={(event) => setBattery(Number(event.target.value))} />
@@ -229,7 +224,7 @@ export default function Home() {
           </form>
 
           {demoMode && <div className="demo-notice"><strong>Demo preview</strong><span>Example locations, routes, or chargers are labelled DEMO. Add the keys listed in README to the project root <code>.env.local</code> for live provider data.</span></div>}
-          <div className="vehicle-note"><span className="note-icon"><Icon name="sliders" size={15} /></span><span>Energy use is estimated from route distance and typical vehicle efficiency.</span></div>
+          <div className="vehicle-note"><span className="note-icon"><Icon name="sliders" size={15} /></span><span>Range and battery use are estimates based on WLTP efficiency. Real-world results vary with speed, weather and load.</span></div>
           <div className="panel-footer"><span>MADE FOR THE OPEN ROAD</span><span>01 / UK</span></div>
         </aside>
 

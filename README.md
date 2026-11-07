@@ -31,11 +31,15 @@ Battery consumption is estimated from route distance, the selected vehicle's typ
 
 If one or more keys are missing, the planner falls back to clearly labelled demo places, a simulated route, and example charger markers so the interface remains interactive. Demo distances are rough estimates; demo charger names and locations are fictional and must not be used for travel.
 
-If one or more keys are missing, the planner falls back to clearly labelled demo places, a simulated route, and example charger markers so the interface remains interactive. Demo distances are rough estimates; demo charger names and locations are fictional and must not be used for travel.
-
 ## Sources
 
 - [Mapbox Geocoding API](https://docs.mapbox.com/api/search/geocoding/)
 - [Mapbox Directions API](https://docs.mapbox.com/api/navigation/directions/)
 - [Mapbox GL JS](https://docs.mapbox.com/mapbox-gl-js/)
 - [Open Charge Map API](https://www.openchargemap.org/develop/api)
+
+## Vehicle catalogue
+
+The planner includes 35 UK trim/year entries from Volkswagen, Škoda, CUPRA, Audi, Ford, and Nissan. Each entry links to its manufacturer's technical data or UK price/specification sheet from the selector. Battery capacity is usable/net capacity. Efficiency is a WLTP combined estimate in mi/kWh; when the source gives kWh/100 km, it is converted using `62.137 / (kWh/100 km)`. WLTP is a comparison baseline and does not predict an individual trip's real-world consumption. Changing the selected vehicle recalculates estimated energy use and refreshes compatible charger results using its connector types.
+
+Catalogue sources: [Volkswagen Newsroom](https://www.volkswagen-newsroom.com/en/), [Škoda UK technical data](https://www.skoda.co.uk/new-cars), [CUPRA Born](https://www.cupraofficial.com/), [Audi MediaCenter](https://www.audi-mediacenter.com/en), [Ford UK price lists](https://www.ford.co.uk/), and [Nissan UK LEAF specifications](https://www.nissan.co.uk/vehicles/new-vehicles/leaf/prices-specifications.html).
